@@ -22,6 +22,7 @@ state_names = states_data["state"].to_list()
 correct_guesses = 0
 #Create empty list to be filled with correct guesses
 correct_guessed_states = []
+states_to_learn = []
 
 #while loop to allow for multiple guesses
 #Once corrrect_guesses = 50 they would have guessed every state
@@ -30,6 +31,16 @@ while correct_guesses < 50:
     #guessed_state saved as a variable
     guessed_state = screen.textinput(title=f"{correct_guesses} / 50", prompt="Whats another States name?").title()
     
+    if guessed_state == "Exit":
+        for state in state_names:
+            if state not in correct_guessed_states:
+                states_to_learn.append(state)
+        states_to_learn = pandas.DataFrame(states_to_learn)
+        states_to_learn.to_csv("States_to_learn.csv")
+        
+        break
+
+
     #check if guessed state is in the state name list
     for state in state_names:
         
